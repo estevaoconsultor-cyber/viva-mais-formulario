@@ -150,6 +150,71 @@ input.bad,select.bad{border-color:var(--erro)}
 form.hide{display:none}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---------- documentos ---------- */
+.secure{
+  display:flex; gap:10px; align-items:flex-start; font-size:.82rem; color:var(--navy);
+  background:rgba(108,191,58,.09); border:1px solid rgba(108,191,58,.35);
+  border-radius:10px; padding:11px 13px; margin:0 0 16px;
+}
+.secure b{color:var(--verde-esc)}
+.up{
+  border:1.5px dashed var(--linha); border-radius:11px; padding:14px; background:var(--claro);
+  margin-bottom:12px; position:relative;
+}
+.up.bad{border-color:var(--erro)}
+.up-head{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
+.up-head strong{display:block; font-size:.9rem}
+.up-head small{display:block; color:var(--cinza); font-size:.78rem; margin-top:2px}
+.up-btn{
+  display:inline-block; padding:9px 15px; border-radius:9px; background:#fff;
+  border:1.5px solid var(--azul); color:var(--azul); font-family:'Poppins',sans-serif;
+  font-weight:600; font-size:.82rem; cursor:pointer; margin:0;
+}
+.up-btn:hover{background:rgba(11,99,206,.06)}
+.up input[type=file]{position:absolute; width:1px; height:1px; opacity:0; pointer-events:none}
+.up-list{margin:0; padding:0; list-style:none; font-size:.82rem}
+.up-list li{
+  display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:8px;
+  padding:7px 10px; background:#fff; border-radius:8px; border:1px solid var(--linha);
+}
+.up-list span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.up .err{margin-top:8px}
+.hp{position:absolute!important; left:-9999px!important; width:1px; height:1px; overflow:hidden}
+.sendErr{
+  display:none; margin-top:14px; padding:12px 14px; border-radius:10px; font-size:.87rem;
+  background:rgba(198,48,60,.07); border:1px solid rgba(198,48,60,.35); color:var(--erro);
+}
+.sendErr.on{display:block}
+
+/* ---------- boas-vindas ---------- */
+.done .badge{
+  display:inline-flex; align-items:center; gap:8px; background:rgba(11,99,206,.08); color:var(--azul);
+  border-radius:99px; padding:7px 15px; font-size:.84rem; font-weight:600; margin:0 0 18px;
+  flex-wrap:wrap; justify-content:center;
+}
+.done .badge #proto{white-space:nowrap}
+.done .badge i{width:8px; height:8px; border-radius:50%; background:#F2A900; display:inline-block}
+.wel{list-style:none; padding:0; margin:6px 0 22px; text-align:left; counter-reset:w}
+.wel li{
+  position:relative; padding:15px 16px 15px 58px; border:1.5px solid var(--linha); border-radius:12px;
+  margin-bottom:10px; background:#fff;
+}
+.wel li::before{
+  counter-increment:w; content:counter(w); position:absolute; left:16px; top:15px;
+  width:28px; height:28px; border-radius:50%; background:var(--turq); color:#fff;
+  font-family:'Poppins',sans-serif; font-weight:600; font-size:.82rem; display:grid; place-items:center;
+}
+.wel strong{display:block; font-family:'Poppins',sans-serif; font-size:.95rem; margin-bottom:3px}
+.wel p{margin:0; color:var(--cinza); font-size:.87rem; max-width:none}
+.wel .links{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+.wel .links a{
+  display:inline-block; padding:8px 14px; border-radius:9px; border:1.5px solid var(--azul);
+  color:var(--azul); text-decoration:none; font-weight:600; font-size:.83rem;
+}
+.wel .links a:hover{background:rgba(11,99,206,.06)}
+.done h3{font-family:'Poppins',sans-serif; font-size:1.02rem; margin:4px 0 12px; text-align:left}
+.done .note{font-size:.8rem; color:var(--cinza); margin:14px auto 0}
 </style>
 </head>
 <body>
@@ -226,9 +291,53 @@ form.hide{display:none}
     <button type="button" class="add" id="addDep">+ Incluir dependente</button>
   </section>
 
-  <!-- 3. PLANO -->
+  <!-- 3. DOCUMENTOS -->
   <section class="card">
-    <div class="step"><span>3</span><h2>Plano e pagamento</h2></div>
+    <div class="step"><span>3</span><h2>Documentos</h2></div>
+
+    <div class="secure">
+      <span aria-hidden="true">🔒</span>
+      <div><b>Envio protegido.</b> Seus documentos vão direto para um arquivo privado da Viva+ Benefícios, acessado apenas pela equipe de cadastro, e são usados somente para ativar o seu plano.</div>
+    </div>
+
+    <div class="up" data-key="doc_titular" data-label="Documento com foto do titular" data-max="2" data-req="1">
+      <div class="up-head">
+        <div><strong>Documento com foto do titular</strong><small>RG ou CNH — frente e verso (até 2 arquivos)</small></div>
+        <label class="up-btn">Anexar<input type="file" accept="image/jpeg,image/png,image/webp,image/heic,application/pdf" multiple></label>
+      </div>
+      <ul class="up-list"></ul>
+      <div class="err"></div>
+    </div>
+
+    <div class="up" data-key="comprovante_residencia" data-label="Comprovante de residência" data-max="1" data-req="1">
+      <div class="up-head">
+        <div><strong>Comprovante de residência</strong><small>Conta de luz, água, telefone ou internet dos últimos 3 meses</small></div>
+        <label class="up-btn">Anexar<input type="file" accept="image/jpeg,image/png,image/webp,image/heic,application/pdf"></label>
+      </div>
+      <ul class="up-list"></ul>
+      <div class="err"></div>
+    </div>
+
+    <div class="up" id="upDeps" data-key="doc_dependentes" data-label="Documentos dos dependentes" data-max="8" data-req="0" style="display:none">
+      <div class="up-head">
+        <div><strong>Documentos dos dependentes</strong><small>RG, CNH ou certidão de nascimento de cada dependente</small></div>
+        <label class="up-btn">Anexar<input type="file" accept="image/jpeg,image/png,image/webp,image/heic,application/pdf" multiple></label>
+      </div>
+      <ul class="up-list"></ul>
+      <div class="err"></div>
+    </div>
+
+    <p class="hint">Formatos aceitos: JPG, PNG, HEIC ou PDF, até 5 MB cada. Fotos tiradas pelo celular são reduzidas automaticamente.</p>
+
+    <div class="hp" aria-hidden="true">
+      <label for="website">Não preencha este campo</label>
+      <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+    </div>
+  </section>
+
+  <!-- 4. PLANO -->
+  <section class="card">
+    <div class="step"><span>4</span><h2>Plano e pagamento</h2></div>
     <div class="grid">
       <div>
         <label for="pgto">Forma de pagamento</label>
@@ -263,9 +372,9 @@ form.hide{display:none}
     </div>
   </section>
 
-  <!-- 4. ACEITE -->
+  <!-- 5. ACEITE -->
   <section class="card">
-    <div class="step"><span>4</span><h2>Aceite do contrato</h2></div>
+    <div class="step"><span>5</span><h2>Aceite do contrato</h2></div>
 
     <label class="check" id="c1w">
       <input type="checkbox" id="c1" required>
@@ -285,15 +394,48 @@ form.hide{display:none}
     <p class="hint">Você tem 7 dias corridos após a assinatura para desistir da contratação, com devolução integral do que foi pago (art. 49 do Código de Defesa do Consumidor).</p>
 
     <button type="submit" class="send" id="btn">Enviar e ativar meu plano</button>
+    <div class="sendErr" id="sendErr"></div>
   </section>
 </form>
 
 <!-- SUCESSO -->
 <section class="card done" id="done">
   <div class="tick">✓</div>
-  <h2>Recebemos seus dados</h2>
-  <p id="doneMsg">Vamos conferir tudo e ativar seu plano em até 24 horas úteis. Você receberá o acesso ao aplicativo no e-mail e no WhatsApp cadastrados.</p>
+  <h2>Boas-vindas à Viva+ Benefícios<span id="wName"></span>!</h2>
+  <div class="badge"><i></i> Contrato em análise · Protocolo <span id="proto">—</span></div>
+  <p id="doneMsg">Recebemos sua ficha e seus documentos. Nossa equipe está conferindo tudo e, assim que o seu acesso estiver liberado, você receberá um <strong>e-mail</strong> e uma mensagem no <strong>WhatsApp</strong> cadastrados. O prazo é de até 24 horas úteis.</p>
+
+  <h3>Enquanto isso, veja como vai funcionar</h3>
+  <ol class="wel">
+    <li>
+      <strong>Baixe o aplicativo</strong>
+      <p>É por ele que você agenda a telemedicina e usa os descontos do clube de benefícios. Instale agora para já estar pronto quando o acesso for liberado.</p>
+      <div class="links" id="appLinks">
+        <a id="lnkAndroid" href="#" target="_blank" rel="noopener">Google Play</a>
+        <a id="lnkIos" href="#" target="_blank" rel="noopener">App Store</a>
+      </div>
+    </li>
+    <li>
+      <strong>Faça o primeiro acesso após a liberação</strong>
+      <p>Use o CPF e o e-mail informados nesta ficha. O login só funciona depois que você receber a confirmação de ativação.</p>
+    </li>
+    <li>
+      <strong>Guarde o contato do SAC</strong>
+      <p>Para dúvidas sobre cadastro, pagamento, app ou consultas, fale com o nosso atendimento ao cliente.</p>
+      <div class="links" id="sacLinks">
+        <a id="lnkSacWa" href="#" target="_blank" rel="noopener">SAC no WhatsApp</a>
+        <a id="lnkSacUrl" href="#" target="_blank" rel="noopener">Central de ajuda</a>
+        <a id="lnkSacMail" href="#">E-mail do SAC</a>
+      </div>
+    </li>
+    <li>
+      <strong>Em caso de emergência</strong>
+      <p>A telemedicina é para atendimentos sem urgência. Em emergências, ligue 192 (SAMU) ou procure o pronto-socorro mais próximo.</p>
+    </li>
+  </ol>
+
   <a class="wa" id="waLink" href="#" target="_blank" rel="noopener">Confirmar pelo WhatsApp</a>
+  <p class="note">Guarde o número do protocolo. Ele será pedido se você precisar falar com o SAC sobre sua adesão.</p>
 </section>
 
 <p class="foot">
@@ -313,9 +455,17 @@ var CONFIG = {
   // Valor por vida/mês
   valorPorVida: 44.90,
 
-  // Onde os dados são gravados. Deixe vazio para funcionar só via WhatsApp.
-  // Ex.: 'https://formspree.io/f/SEU_ID'  ou a URL da sua função no Vercel/Firebase
-  endpoint: ''
+  // Onde os dados e documentos são gravados (Google Drive).
+  // Cole aqui a URL do App da Web do Google Apps Script (termina em /exec).
+  // Deixe vazio para funcionar só via WhatsApp (sem envio de documentos).
+  endpoint: '',
+
+  // Tela de boas-vindas — links exibidos ao cliente (deixe vazio para esconder o botão)
+  appAndroid: '',   // link do app na Google Play
+  appIos: '',       // link do app na App Store
+  sacWhatsapp: '',  // WhatsApp do SAC (formato: 55 + DDD + número)
+  sacUrl: '',       // página de ajuda / SAC
+  sacEmail: ''      // e-mail do SAC
 };
 /* ===================================================================== */
 
@@ -488,8 +638,136 @@ function toText(x){
   L.push('Pagamento: ' + x.plano.pagamento + ' — vencimento ' + x.plano.vencimento);
   L.push('');
   L.push('Aceites: contrato, LGPD e veracidade confirmados.');
+  if(x.protocolo){
+    L.push('');
+    L.push('Protocolo: ' + x.protocolo);
+  }
   return L.join('\n');
 }
+
+/* ---------- documentos (anexos) ---------- */
+var UP_MAX_BYTES = 5 * 1024 * 1024;      // 5 MB por arquivo
+var UP_TOTAL_BYTES = 20 * 1024 * 1024;   // 20 MB no total
+var UP_TYPES = /^(image\/(jpeg|png|webp|heic|heif)|application\/pdf)$/;
+var anexos = {};                         // chave -> [{nome, tipo, dados(base64), tamanho}]
+
+function fileToB64(file){
+  return new Promise(function(res, rej){
+    var r = new FileReader();
+    r.onload = function(){ res({ nome:file.name, tipo:file.type || 'application/octet-stream', dados:String(r.result).split(',')[1], tamanho:file.size }); };
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+// Reduz fotos grandes do celular antes de enviar (mantém legível)
+function prepFile(file){
+  if(!/^image\/(jpeg|png|webp)$/.test(file.type) || file.size < 1200000) return fileToB64(file);
+  return new Promise(function(res){
+    var url = URL.createObjectURL(file), img = new Image();
+    img.onload = function(){
+      var s = Math.min(1, 2000 / Math.max(img.width, img.height));
+      var c = document.createElement('canvas');
+      c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      var d = c.toDataURL('image/jpeg', 0.82);
+      res({ nome:file.name.replace(/\.[^.]+$/, '') + '.jpg', tipo:'image/jpeg', dados:d.split(',')[1], tamanho:Math.round(d.length * 0.75) });
+    };
+    img.onerror = function(){ URL.revokeObjectURL(url); fileToB64(file).then(res); };
+    img.src = url;
+  });
+}
+function totalAnexos(){
+  var t = 0;
+  Object.keys(anexos).forEach(function(k){ anexos[k].forEach(function(a){ t += a.tamanho; }); });
+  return t;
+}
+function kb(n){ return n > 1048576 ? (n/1048576).toFixed(1).replace('.',',') + ' MB' : Math.round(n/1024) + ' KB'; }
+
+function renderUp(box){
+  var key = box.dataset.key, list = box.querySelector('.up-list');
+  list.innerHTML = '';
+  (anexos[key] || []).forEach(function(a, i){
+    var li = document.createElement('li');
+    var sp = document.createElement('span');
+    sp.textContent = '📎 ' + a.nome + ' (' + kb(a.tamanho) + ')';
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'rm'; b.textContent = 'Remover';
+    b.addEventListener('click', function(){ anexos[key].splice(i, 1); renderUp(box); });
+    li.appendChild(sp); li.appendChild(b); list.appendChild(li);
+  });
+}
+function upErr(box, msg){
+  var e = box.querySelector('.err');
+  e.textContent = msg || '';
+  e.classList.toggle('on', !!msg);
+  box.classList.toggle('bad', !!msg);
+}
+
+document.querySelectorAll('.up').forEach(function(box){
+  var key = box.dataset.key, max = +box.dataset.max;
+  anexos[key] = [];
+  var inp = box.querySelector('input[type=file]');
+  inp.addEventListener('change', function(){
+    var files = Array.prototype.slice.call(inp.files || []);
+    inp.value = '';
+    upErr(box, '');
+    var jobs = [];
+    files.forEach(function(f){
+      if(anexos[key].length + jobs.length >= max){ upErr(box, 'Limite de ' + max + ' arquivo(s) neste campo.'); return; }
+      var tipo = f.type || (/\.heic$/i.test(f.name) ? 'image/heic' : '');
+      if(!UP_TYPES.test(tipo)){ upErr(box, '"' + f.name + '" não é um formato aceito (JPG, PNG, HEIC ou PDF).'); return; }
+      jobs.push(prepFile(f));
+    });
+    Promise.all(jobs).then(function(arr){
+      arr.forEach(function(a){
+        if(a.tamanho > UP_MAX_BYTES){ upErr(box, '"' + a.nome + '" passa de 5 MB. Envie um arquivo menor.'); return; }
+        if(totalAnexos() + a.tamanho > UP_TOTAL_BYTES){ upErr(box, 'O total de anexos passou de 20 MB.'); return; }
+        anexos[key].push(a);
+      });
+      renderUp(box);
+    }).catch(function(){ upErr(box, 'Não foi possível ler o arquivo. Tente novamente.'); });
+  });
+});
+
+// Mostra o campo de documentos dos dependentes só quando houver dependente
+var upDeps = document.getElementById('upDeps');
+new MutationObserver(function(){
+  var tem = deps.querySelectorAll('.dep').length > 0;
+  upDeps.style.display = tem ? '' : 'none';
+  upDeps.dataset.req = tem ? '1' : '0';
+  if(!tem){ anexos.doc_dependentes = []; renderUp(upDeps); upErr(upDeps, ''); }
+}).observe(deps, {childList:true});
+
+function checkUploads(){
+  var ok = true;
+  document.querySelectorAll('.up').forEach(function(box){
+    if(box.dataset.req === '1' && !(anexos[box.dataset.key] || []).length){
+      upErr(box, 'Anexe este documento para continuar.');
+      ok = false;
+    }
+  });
+  return ok;
+}
+
+function gerarProtocolo(){
+  var d = new Date(), p = function(n){ return ('0' + n).slice(-2); };
+  return 'VB' + String(d.getFullYear()).slice(-2) + p(d.getMonth()+1) + p(d.getDate()) + '-' +
+         Math.random().toString(36).slice(2, 7).toUpperCase();
+}
+
+/* ---------- tela de boas-vindas: links ---------- */
+function setLink(id, href){
+  var a = document.getElementById(id);
+  if(href){ a.href = href; } else { a.style.display = 'none'; }
+}
+setLink('lnkAndroid', CONFIG.appAndroid);
+setLink('lnkIos', CONFIG.appIos);
+setLink('lnkSacWa', CONFIG.sacWhatsapp ? 'https://wa.me/' + CONFIG.sacWhatsapp : '');
+setLink('lnkSacUrl', CONFIG.sacUrl);
+setLink('lnkSacMail', CONFIG.sacEmail ? 'mailto:' + CONFIG.sacEmail : '');
+if(!CONFIG.appAndroid && !CONFIG.appIos) document.getElementById('appLinks').style.display = 'none';
+if(!CONFIG.sacWhatsapp && !CONFIG.sacUrl && !CONFIG.sacEmail) document.getElementById('sacLinks').style.display = 'none';
 
 /* ---------- envio ---------- */
 document.getElementById('f').addEventListener('submit', function(e){
@@ -515,24 +793,36 @@ document.getElementById('f').addEventListener('submit', function(e){
     if(on) ok = false;
   });
 
+  if(CONFIG.endpoint && !checkUploads()) ok = false;
+
   if(!ok){
     var first = document.querySelector('.bad');
     if(first) first.scrollIntoView({behavior:'smooth', block:'center'});
     return;
   }
 
+  var sendErr = document.getElementById('sendErr');
+  sendErr.classList.remove('on');
+
   var data = collect();
+  data.protocolo = gerarProtocolo();
   var btn = document.getElementById('btn');
   btn.disabled = true;
-  btn.textContent = 'Enviando...';
+  btn.textContent = 'Enviando seus dados e documentos...';
 
-  var wa = 'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(toText(data));
-  document.getElementById('waLink').href = wa;
+  function setWa(){
+    var wa = 'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(toText(data));
+    document.getElementById('waLink').href = wa;
+  }
+  setWa();
 
   function finish(saved){
     document.getElementById('f').classList.add('hide');
     var done = document.getElementById('done');
     done.classList.add('on');
+    var primeiro = (data.titular.nome || '').split(' ')[0];
+    document.getElementById('wName').textContent = primeiro ? ', ' + primeiro : '';
+    document.getElementById('proto').textContent = data.protocolo;
     if(!saved){
       document.getElementById('doneMsg').textContent =
         'Só falta confirmar: toque no botão abaixo para enviar seus dados pelo WhatsApp. Assim que recebermos, ativamos seu plano em até 24 horas úteis.';
@@ -540,13 +830,35 @@ document.getElementById('f').addEventListener('submit', function(e){
     window.scrollTo({top:0, behavior:'smooth'});
   }
 
+  function fail(msg){
+    btn.disabled = false;
+    btn.textContent = 'Enviar e ativar meu plano';
+    sendErr.textContent = msg || 'Não foi possível enviar seus documentos agora. Verifique sua conexão e toque em "Enviar" novamente. Seus dados continuam preenchidos.';
+    sendErr.classList.add('on');
+    sendErr.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  // Robô preencheu o campo oculto: finge sucesso e não envia nada
+  if(document.getElementById('website').value){ finish(true); return; }
+
   if(CONFIG.endpoint){
+    var payload = { dados: data, anexos: anexos, website: '' };
+    // text/plain evita bloqueio de CORS no Google Apps Script
     fetch(CONFIG.endpoint,{
       method:'POST',
-      headers:{'Content-Type':'application/json', 'Accept':'application/json'},
-      body: JSON.stringify(data)
-    }).then(function(r){ finish(r.ok); })
-      .catch(function(){ finish(false); });
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify(payload),
+      redirect:'follow'
+    }).then(function(r){ return r.json(); })
+      .then(function(j){
+        if(j && j.ok){
+          if(j.protocolo){ data.protocolo = j.protocolo; setWa(); }
+          finish(true);
+        } else {
+          fail(j && j.erro);
+        }
+      })
+      .catch(function(){ fail(); });
   } else {
     finish(false);
   }
